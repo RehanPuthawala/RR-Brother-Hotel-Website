@@ -18,6 +18,28 @@ $font-heading: "Poppins", sans-serif;
 $font-primary: "Open Sans", sans-serif;
 $font-subtitle: "Libre Baskerville", serif;
 
+// * --------------------------------------------------------Mixin --------------------------------------------------------- * //
+
+$bp-largest: 140em;
+$bp-large: 120em;
+$bp-medium: 110em;
+
+@mixin responsive($bp) {
+  @if $bp == bp-largest {
+    @media only screen and (max-width: $bp-largest) {
+      @content;
+    }
+  } @else if $bp == bp-large {
+    @media only screen and (max-width: $bp-large) {
+      @content;
+    }
+  } @else if $bp == bp-medium {
+    @media only screen and (max-width: $bp-medium) {
+      @content;
+    }
+  }
+}
+
 // * --------------------------------------------------------Basic Reset--------------------------------------------------------- * //
 
 *,
@@ -31,6 +53,10 @@ $font-subtitle: "Libre Baskerville", serif;
 html {
   font-size: 62.5%;
   box-sizing: border-box;
+
+  @include responsive(bp-medium) {
+    // font-size: 50%;
+  }
 }
 
 body {
@@ -143,8 +169,13 @@ body {
 
   &__dash {
     width: 1rem;
-    height: 1px;
-    background-color: $color-primary;
+    height: 2px;
+    background-color: rgba($color-primary, 0.7);
+    transition: all 0.3s;
+  }
+
+  &__item:hover > &__dash {
+    background-color: $color-primary-dark;
   }
 
   &__link {
@@ -154,19 +185,19 @@ body {
 }
 
 .section-other {
-  grid-column: page-start / page-end;
+  grid-column: col-start / page-end;
   grid-row: 5 / 6;
 }
 
 .other {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1.3fr 2fr;
   // grid-gap: 3rem;
 
   &__news {
     grid-column: 1 / 2;
     margin-left: auto;
-    width: 78%;
+    // width: 78%;
     padding: 4rem 0;
     padding-right: 3rem;
 
@@ -240,7 +271,7 @@ body {
     font-family: $font-heading;
     position: relative;
     margin-left: 4rem;
-    font-style: 2rem;
+    font-size: 2rem;
     line-height: 1.7;
     shape-outside: polygon(50% 0, 50% 0, 100% 50%, 50% 100%, 0 50%);
     // shape-margin: 2rem;
